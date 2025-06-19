@@ -96,3 +96,27 @@ resource "digitalocean_record" "loki" {
   name   = "loki"
   value  = digitalocean_droplet.monitoring.ipv4_address
 }
+
+resource "digitalocean_firewall" "monitoring" {
+  name = "monitoring-firewall"
+  
+  droplet_ids = [digitalocean_droplet.monitoring.id]
+  
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "22"
+    source_addresses = ["YOUR_PUBLIC_IP/32"]
+  }
+  
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "80"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "443"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+}
