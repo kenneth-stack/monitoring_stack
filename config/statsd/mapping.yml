@@ -1,0 +1,48 @@
+mappings:
+  # Example of a counter metric
+  - match: "test.counter.*"
+    name: "test_counter_total"
+    labels:
+      type: "$1"
+
+  # Example of a timing metric
+  - match: "test.timing.*"
+    name: "test_timing_milliseconds"
+    timer_type: histogram
+    labels:
+      type: "$1"
+
+  # Example of a gauge metric
+  - match: "test.gauge.*"
+    name: "test_gauge"
+    labels:
+      type: "$1"
+
+# Default metrics settings
+defaults:
+  timer_type: histogram
+  buckets: [.005, .01, .025, .05, .1, .25, .5, 1, 2.5, 5, 10]
+  match_type: glob
+  glob_disable_ordering: false
+  ttl: 0 # metrics do not expire
+
+# Observer settings
+observations:
+  type: summary
+  quantiles:
+    - quantile: 0.99
+      error: 0.001
+    - quantile: 0.95
+      error: 0.01
+    - quantile: 0.9
+      error: 0.05
+    - quantile: 0.5
+      error: 0.05
+
+# StatsD server settings
+statsd:
+  mapping_config: /etc/statsd/statsd-mapping.yml
+  read_buffer: 0
+  listen_udp: ":9125"
+  listen_tcp: ":9125"
+  listen_unixgram: ""

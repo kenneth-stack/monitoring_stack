@@ -1,0 +1,8 @@
+.env
+*.log
+terraform.tfvars
+terraform.tfstate
+.terraform
+digitalocean-credentials.ini
+.terraform.lock.hcl
+terraform.tfstate.backup
