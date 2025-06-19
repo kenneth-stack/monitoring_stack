@@ -1,5 +1,5 @@
 ```mermaid
-flowchart TB
+graph TD
     subgraph Infrastructure["I. Infrastructure Creation"]
         T[Terraform] -->|Creates| D[DigitalOcean Droplet]
         T -->|Creates| DNS[DNS Records]
@@ -32,6 +32,7 @@ flowchart TB
         LOKI -->|Query Logs| GRAF
     end
 ```
+
 # Monitoring Stack on DigitalOcean
 
 A complete infrastructure-as-code solution for deploying a comprehensive monitoring stack on DigitalOcean using Terraform and automated bash scripts.
